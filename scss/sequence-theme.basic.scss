@@ -1,0 +1,469 @@
+/**
+ * Theme Name: Basic
+ * Version: 1.0.0
+ * Theme URL: http://sequencejs.com/themes/basic/
+ *
+ * A simple, colorful side-to-side slider
+ *
+ * This theme is powered by Sequence.js - The
+ * responsive CSS animation framework for creating unique sliders,
+ * presentations, banners, and other step-based applications.
+ *
+ * Author: Ian Lunn
+ * Author URL: http://ianlunn.co.uk/
+ *
+ * Theme License: http://sequencejs.com/licenses/#free-theme
+ * Sequence.js Licenses: http://sequencejs.com/licenses/
+ *
+ * Copyright © 2015 Ian Lunn Design Limited unless otherwise stated.
+ */
+
+
+@import "partials/mixins";
+@import "partials/colours";
+
+body,
+html,
+.seq {
+  /* Uncomment to make the theme full-screen */
+  /* width: 100% !important; */
+  /* max-width: 100% !important; */
+  /* height: 100% !important; */
+  /* max-height: 100% !important; */
+}
+
+$sequenceMobileHeight: 420px;
+$sequenceDesktopHeight: 585px;
+
+
+.seq {
+  position: relative;
+
+  /* Dimensions */
+  width: 100%;
+  height: $sequenceMobileHeight;
+  max-width: 100%;
+
+  /* Center the Sequence container on the page */
+  margin: 0 auto;
+  padding: 0;
+
+  /* Some basic styles */
+  font-family: 'Raleway', sans-serif;
+
+
+  .seq-pagination,
+  .seq-screen,
+  .seq-canvas,
+  .seq-canvas > * {
+    /* Reset the canvas and steps for better browser consistency */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .seq-preloader {
+    background: url("../images/backgroundsailing.jpg") no-repeat 0 0px;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  &.seq-active .seq-nav {
+    /* Show navigation and pagination if JS is enabled */
+    display: block;
+  }
+
+  .seq-nav {
+    /* Styles for next/previous buttons and pagination */
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    width: 100%;
+    //max-width: $sequenceWidth;
+    margin: 0 auto;
+    padding: 0;
+    pointer-events: none;
+    border: none;
+  }
+
+  .seq-next,
+  .seq-prev {
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    /*margin-top: -33px;*/
+    width: 18px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    pointer-events: auto;
+    @include prefixed(transition-duration, ".2s");
+    @include prefixed(transform, "translate3d(0, 0, 0)");
+
+    /* Image replacement */
+    border: 0;
+    font: 0/0 a;
+    text-shadow: none;
+    color: transparent;
+  }
+
+  .seq-next {
+    right: 1%;
+    background: url("../images/btn_next.png");
+
+    &:focus,
+    &:hover {
+      //right: 1.5%
+      @include prefixed(transform, "translate3d(4px, 0, 0)");
+    }
+  }
+
+  .seq-prev {
+    left: 1%;
+    background: url("../images/btn_prev.png");
+
+    &:focus,
+    &:hover {
+      //left: 1.5%
+      @include prefixed(transform, "translate3d(-4px, 0, 0)");
+    }
+  }
+
+  .seq-next:hover, .seq-prev:hover {
+      -webkit-transition-duration: 0.2s;
+      -moz-transition-duration: 0.2s;
+      -ms-transition-duration: 0.2s;
+      -o-transition-duration: 0.2s;
+      transition-duration: 0.2s;
+      -webkit-transform: scale(1.10);
+      -moz-transform: scale(1.10);
+      -ms-transform: scale(1.10);
+      -o-transform: scale(1.10);
+      transform: scale(1.10); }
+
+  /*.seq-pagination {
+    position: absolute;
+    z-index: 10;
+    bottom: 50px;
+    width: 100%;
+    border: none;
+    text-align: center;
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .seq-current {
+      @include prefixed(border-radius, "100%");
+      border-color: $green;
+    }
+
+    > * {
+      margin: 0 1px;
+      padding: 0;
+      display: inline-block;
+      zoom: 1;
+      width: 5px;
+      height: 5px;
+      cursor: pointer;
+      background: none;
+      border: $grey-med solid 2px;
+      @include prefixed(transition-duration, ".1s");
+      @include prefixed(transition-property, "background-color, border-radius");
+
+      &:nth-child(1):focus, &:nth-child(1):hover,
+      &:nth-child(2):focus, &:nth-child(2):hover,
+      &:nth-child(3):focus, &:nth-child(3):hover {
+        background-color: $green;
+        opacity: 0.6;
+      }
+
+      /* Image replacement */
+      /*font: 0/0 a;
+      text-shadow: none;
+      color: transparent;
+    }*/
+  /*}*/
+
+  .seq-canvas {
+    /* Make the canvas the same dimensions as the container and prevent lines
+     * from wrapping so each step can sit side-by-side */
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    white-space: nowrap;
+    /* Reset the font-size to remove 4px from :before and .title */
+    font-size: 0;
+
+    > * {
+      /* Make the steps the same size as the container and sit side-by-side */
+      display: inline-block;
+      zoom: 1;
+      vertical-align: top;
+      width: 100%;
+      height: 100%;
+      white-space: normal;
+      text-align: center;
+      color: $white;
+      @include prefixed(transform, "translateZ(0)");
+    }
+
+    > *:before {
+      /* Vertically align .seq-content */
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+
+  .seq-content {
+    /* Default styles for content */
+    display: inline-block;
+    //vertical-align: middle;
+    //max-width: 760px;
+    width: 68%;
+    margin: 0 4%;
+    /* Reset the font-size from 0 back to 16 */
+    font-size: 16px;
+  }
+
+  .bg-opacity {
+        background: rgba(0, 0, 0, 0.3);
+        bottom: 0;
+        left: 0;
+        margin: 0 auto;
+        position: absolute;
+        right: 0;
+        width: 100%;
+        height: 974px;
+    }
+
+  .seq-button {
+    display: inline-block;
+    zoom: 1;
+    margin-top: 1em;
+    padding: 15px 25px;
+    color: $blue;
+    border: $blue solid 3px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    @include prefixed(animation-fill-mode, "forwards");
+    @include prefixed(transition-duration, ".25s");
+    @include prefixed(transition-property, "background-color, color");
+
+    &:focus,
+    &:hover {
+      background-color: $blue;
+      color: #fff;
+    }
+  }
+
+  .seq-step1 {
+    background: url("../images/backgroundsailing.jpg") no-repeat 0 0;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    .seq-button:focus,
+    .seq-button:hover {
+      color: $white;
+    }
+  }
+
+  /*.seq-step2 {
+    background: url("../images/banner3.jpg") no-repeat 0 0;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    .seq-button:focus,
+    .seq-button:hover {
+      color: $white;
+    }
+  }
+
+  .seq-step3 {
+    background: url("../images/banner2.jpg") no-repeat 0 0;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    .seq-button:focus,
+    .seq-button:hover {
+      color: $white;
+    }
+  }*/
+
+  .seq-title,
+  .seq-subtitle,
+  .seq-button {
+    font-weight: bold;
+    text-align: left;
+    -moz-osx-font-smoothing: grayscale;
+    @include prefixed(transform, "translateZ(0)");
+  }
+
+  .seq-title,
+  .seq-subtitle {
+    font-family: 'Raleway', sans-serif;
+    margin: 0 0 .5em 0;
+    display: block;
+    line-height: 1.4;
+    -moz-osx-font-smoothing: grayscale;
+    @include prefixed(transform, "translateZ(0)");
+  }
+
+.seq-title {
+    color: $blue;
+    font-size: 3.7em;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    margin: 0 auto 20px;
+    //text-shadow: 3px 0 13px $black;
+}
+
+.seq-subtitle {
+    font-size: 2.4rem;
+    font-weight: normal;
+    color: $white;
+    position: relative;
+    z-index: 5;
+    //text-shadow: 1px 0 13px $black;
+
+    &:after {
+        display: none;
+    }
+}
+
+  &.seq-active {
+    /* when JS is enabled */
+
+    /* Hide anything that goes beyond the boundaries of the Sequence container */
+    overflow: hidden;
+
+    .seq-preloader,
+    .seq-pagination {
+      visibility: visible;
+    }
+
+    .seq-preloader.seq-preloaded {
+      visibility: hidden;
+    }
+
+    .seq-preloader .seq-preload-circle {
+      fill: $white;
+    }
+
+    .seq-content {
+      /* Pull the content up a bit to account for the pagination */
+      //margin-top: -26px;
+    }
+
+    .seq-button {
+      @include prefixed(transform, "translateZ(0) scale(0)");
+      @include key-frames(jelly) {
+        0% {
+          @include prefixed(transform, "translateZ(0) scale(0)");
+        }
+        40% {
+          @include prefixed(transform, "translateZ(0) scale(1.15)");
+        }
+        60% {
+          @include prefixed(transform, "translateZ(0) scale(1)");
+        }
+        80% {
+          @include prefixed(transform, "translateZ(0) scale(1.05)");
+        }
+        100% {
+          @include prefixed(transform, "translateZ(0) scale(1)");
+        }
+      }
+    }
+
+    .seq-title,
+    .seq-subtitle {
+      /* Starting positions */
+      opacity: 0;
+      @include prefixed(transition-duration, ".9s");
+    }
+
+    .seq-title {
+      @include prefixed(transform, "translate3d(0, -20px, 0)");
+    }
+
+    h3 {
+      @include prefixed(transform, "translate3d(0, 20px, 0)");
+    }
+  }
+
+  .seq-in {
+    /* Animate in positions for content */
+    .seq-title,
+    .seq-subtitle {
+      opacity: 1;
+      @include prefixed(transform, "translate3d(0, 0, 0)");
+    }
+
+    .seq-button {
+      @include prefixed(animation-name, "jelly");
+      @include prefixed(animation-duration, ".5s");
+    }
+  }
+
+  .seq-out {
+    /* Animate out positions for content */
+    .seq-title,
+    .seq-subtitle {
+      opacity: 1;
+      @include prefixed(transform, "translate3d(0, 0, 0)");
+    }
+
+    .seq-button {
+      @include prefixed(transform, "scale(1) translateZ(0)");
+    }
+  }
+
+  @media only screen and (min-width: 600px) {
+
+    /* Make the container 16:9 but no bigger than 90% of the screen height */
+    @include aspect-ratio(16, 9);
+    height: 100%;
+    max-height: 100vh;
+    //min-height: $sequenceMobileHeight;
+
+    .seq-content {
+      /* Pull the content up to account for the pagination */
+      //margin-top: -19px;
+    }
+
+    .seq-pagination > * {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .seq-title,
+    .seq-subtitle {
+      font-size: 1.4em;
+    }
+
+    .seq-title {
+      font-size: 3.6em;
+      line-height: 1.0em;
+    }
+  }
+}

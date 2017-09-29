@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "css/sequence-theme.basic.css",
+    "inputFile": "scss/sequence-theme.basic.scss"
+  },
+  {
+    "outputFile": "css/styles.css",
+    "inputFile": "scss/styles.scss"
+  }
+]
