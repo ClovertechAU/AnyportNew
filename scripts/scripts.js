@@ -65,8 +65,8 @@ function onScroll(event) {
 
 /***************** GOOGLE MAPS ******************/
 function initMap() {
-    var myLatlng = new google.maps.LatLng(-38.386854, 142.484103);
-    var center = new google.maps.LatLng(-38.386854, 142.484103);
+    var myLatlng = new google.maps.LatLng(-33.673028, 151.304798);
+    var center = new google.maps.LatLng(-33.673028, 151.304798);
     var zoom = 14;
     var drag = true;
 
@@ -264,10 +264,10 @@ function initMap() {
         var map = new google.maps.Map(this, myOptions);
         var mapType = new google.maps.StyledMapType(style, { name: "grayscale" });
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(-38.386854, 142.484103),
+            position: new google.maps.LatLng(-33.673028, 151.304798),
             icon: 'images/mapMarker.png',
             map: map,
-            title: 'KJF Custom Trim!'
+            title: 'AnyPort Marine'
         });
 
         map.mapTypes.set('gray', mapType);
